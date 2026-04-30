@@ -1,6 +1,6 @@
 import openpyxl, os
 
-path = r"C:\Users\Brno Goes\OneDrive - Douro Capital Gestora de Recursos e Investimentos Ltda\Douro - Investimentos\Análise de Crédito\Rating Crédito\Scorecard de Empresas.xlsm"
+path = r"C:\Users\Eduardo\Douro Capital Gestora de Recursos e Investimentos Ltda\Douro Capital - Douro - Investimentos (1)\Análise de Crédito\Rating Crédito\Scorecard de Empresas.xlsm"
 
 wb = openpyxl.load_workbook(path, data_only=True)
 ws = wb["Fund Quant"]

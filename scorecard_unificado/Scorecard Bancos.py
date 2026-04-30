@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import time
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 
@@ -56,7 +57,8 @@ bancos = {
     'C0082475': 'XP Investimentos',
     'C0080848': 'Banco GM',
     'C0081328': 'BDMG',
-    'C0083704': 'Facta Financeira'
+    'C0088022': 'Picpay',
+    'C0083704': 'Facta Financeira',
 }
 
 # períodos por relatório 
@@ -69,7 +71,7 @@ periodos_por_rel = {
 }
 
 # planilha de destino
-ARQUIVO_XLSM = r"C:\Users\Brno Goes\OneDrive - Douro Capital Gestora de Recursos e Investimentos Ltda\Douro - Investimentos\Análise de Crédito\Rating Crédito\Watch List Bancos.xlsm"
+ARQUIVO_XLSM = r"C:\Users\Eduardo\Douro Capital Gestora de Recursos e Investimentos Ltda\Douro Capital - Douro - Investimentos (1)\Análise de Crédito\Rating Crédito\Watch List Bancos.xlsm"
 ABA_DESTINO = "Fund Quant"
 LINHA_INICIAL = 4  # começar na linha 4
 
@@ -112,9 +114,23 @@ def baixa_relatorio(relatorio_id: str, nome_rel: str, lista_periodos, session: r
             "&$top=100000&$format=json"
             "&$select=CodInst,NomeColuna,Saldo"
         )
-        r = session.get(url, timeout=60)
-        if r.status_code != 200:
-            print(f"❌ Erro API {nome_rel} - {anomes} ({r.status_code})")
+        
+        sucesso = False
+        for tentativa in range(3):
+            try:
+                r = session.get(url, timeout=120)
+                if r.status_code == 200:
+                    sucesso = True
+                    break
+                else:
+                    print(f"❌ Erro API {nome_rel} - {anomes} (HTTP {r.status_code}) - Tentativa {tentativa+1}/3")
+                    time.sleep(3)
+            except requests.exceptions.RequestException as e:
+                print(f"⚠️ Timeout/Erro API {nome_rel} - {anomes} ({type(e).__name__}) - Tentativa {tentativa+1}/3")
+                time.sleep(5)
+        
+        if not sucesso:
+            print(f"❌ Desistindo de {nome_rel} - {anomes} após 3 tentativas.")
             continue
         
         dados = r.json().get("value", [])
