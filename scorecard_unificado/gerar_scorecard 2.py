@@ -32,10 +32,11 @@ from jinja2 import Template
 
 _SCORECARD_DIR = os.path.dirname(os.path.abspath(__file__))
 _ONEDRIVE = os.path.join(os.path.expanduser("~"), "Douro Capital Gestora de Recursos e Investimentos Ltda", "Douro Capital - Douro - Investimentos (1)", "Análise de Crédito", "Rating Crédito")
+_ONEDRIVE_RATING = os.path.join(os.path.expanduser("~"), "OneDrive - Douro Capital Gestora de Recursos e Investimentos Ltda", "Douro - Investimentos", "Análise de Crédito", "Rating Crédito")
 
 EXCEL_PATH_PRIVADO = os.path.join(_ONEDRIVE, "Scorecard de Empresas.xlsm")
 EXCEL_PATH_BANCOS  = os.path.join(_ONEDRIVE, "Watch List Bancos.xlsm")
-OUTPUT_HTML        = os.path.join(_SCORECARD_DIR, "scorecard.html")
+OUTPUT_HTML        = os.path.join(_ONEDRIVE_RATING, "scorecard.html")
 LOGO_PATH          = os.path.join(_SCORECARD_DIR, "Douro-Capital-logo-Horizontal-colorida (3).png")
 # ─────────────────────────────────────────────────────────────
 
