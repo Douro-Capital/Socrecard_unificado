@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import requests
 import time
@@ -71,7 +72,8 @@ periodos_por_rel = {
 }
 
 # planilha de destino
-ARQUIVO_XLSM = r"C:\Users\Eduardo\Douro Capital Gestora de Recursos e Investimentos Ltda\Douro Capital - Douro - Investimentos (1)\Análise de Crédito\Rating Crédito\Watch List Bancos.xlsm"
+_ONEDRIVE_RATING = os.path.join(os.path.expanduser("~"), "OneDrive - Douro Capital Gestora de Recursos e Investimentos Ltda", "Douro - Investimentos", "Análise de Crédito", "Rating Crédito")
+ARQUIVO_XLSM = os.path.join(_ONEDRIVE_RATING, "Watch List Bancos.xlsm")
 ABA_DESTINO = "Fund Quant"
 LINHA_INICIAL = 4  # começar na linha 4
 
